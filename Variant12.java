@@ -1,17 +1,19 @@
 package lab0;
 
+import java.lang.reflect.Array;
+
 import static java.lang.Math.sqrt;
 
 public class Variant12 {
 
-    /**
-     *
-     * @param k is square side
-     * @return perimeter
-     */
-    public int inputOutputTask(int k) {
-        return 0;
-    }
+//    /**
+//     *
+//     * @param k is square side
+//     * @return perimeter
+//     */
+//    public int inputOutputTask(int k) {
+//        return 0;
+//    }
 
     /**
      *
@@ -49,7 +51,7 @@ public class Variant12 {
             else return c;
         }
         else if (b < c) return b;
-             else return c;
+        else return c;
     }
 
 
@@ -57,7 +59,7 @@ public class Variant12 {
      *
      * @param number is the index of the circle's value: 1 - radius, 2 - diameter, 3 - length of circumference, 4 - area
      * @param value is the required value
-     * @return every possible value in order
+     * @return every value in order
      */
     public double[] switchTask(int number, double value) {
         double[] circle = new double[4];
@@ -75,10 +77,10 @@ public class Variant12 {
                 circle[3] = 3.14 * value * value / 4;
                 return circle;
             case 3:
-                circle[0] = value / 2 / 3.14;
+                circle[0] = circle[1] / 2;
                 circle[1] = value / 3.14;
                 circle[2] = value;
-                circle[3] = value * value / 2;
+                circle[3] = circle[0] * circle[0] * 3.14;
                 return circle;
             case 4:
                 circle[0] = sqrt(value / 3.14);
@@ -109,14 +111,66 @@ public class Variant12 {
         return product;
     }
 
+    /**
+     *
+     * @param n is an integer bigger than 1
+     * @return the sum and the smallest k such that: sum = 1 + 2 +...+ k >= n
+     */
 
-    public int whileTask(int a, int b) {
-        assert (a >0 && b > 0): "Argument should be more than zero";
-        return 0;
+    public int[] whileTask(int n) {
+        assert n > 1: "Input should be more than 1";
+        int k = 1;
+        int sum = 0;
+        while (sum < n){
+            sum += k;
+            k++;
+        }
+        int[] output = {k - 1, sum};
+        return output;
     }
 
-    public double arrayTask(double[] array) {
-        return 0;
+    /**
+     *
+     * @param arr is an array
+     * @param n is the length of arr
+     * @return the smallest positive integer, if there are none ,return 0
+     */
+
+    public int minMaxTask(int[] arr, int n){
+        assert arr.length == n: "The array should have n numbers";
+        int min = 0;
+        int j = 0;
+        for(;j < n; j++){
+            if (arr[j] <= 0) {
+                continue;
+            }
+            else{
+                min = arr[j];
+                break;
+            }
+        }
+        for(int i = j; i < n; i++){
+            if (arr[i] <= 0){
+                continue;
+            }
+            else if (arr[i] < min){
+                min = arr[i];
+            }
+        }
+        return min;
+    }
+
+    public double[] arrayTask(double[] array, int n) {
+        assert array.length == n: "The array should have n numbers";
+        assert array.length % 2 == 0: "The array should have an even amount of numbers";
+
+        double[] res = new double[n / 2];
+        int j = 0;
+        for(int i = 1; i < n; i += 2){
+            res[j] = array[i];
+            j++;
+        }
+        return res;
     }
 
     /**
