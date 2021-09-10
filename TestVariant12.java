@@ -11,33 +11,6 @@ public class TestVariant12 {
 
     public static double EPS = 0.000001;
 
-    @Test
-    public void MassTest(){
-        assertEquals(new int[]{1, 2, 3}, new int[]{1, 2, 3});
-    }
-
-    @Test(enabled = false)
-    public void loginOld() {
-
-//        assertEquals(new Variant12().booleanTask(3), false);
-
-    }
-
-    @Test(dataProvider = "inputProvider")
-    public void inputTest(int p1, long p3) {
-        assertEquals(new Variant12().inputOutputTask(p1), p3);
-    }
-
-    @DataProvider
-    public Object[][] inputProvider() {
-        return new Object[][] { { 2, 4l }, { 6, 36L } };
-    }
-
-    @Test(expectedExceptions = AssertionError.class)
-    public void negativeInputTest() {
-        new Variant12().inputOutputTask(-2);
-    }
-
     ////////////////////////////////////////////////
 
     @Test(dataProvider = "integerProvider")
@@ -88,7 +61,10 @@ public class TestVariant12 {
 
     @DataProvider
     public Object[][] switchProvider() {
-        return new Object[][] { { 1, 1 }, { 2, 6 }, { 3, 12 } };
+        double[] input1 = { 1, 2, 6.28, 3.14 };
+        double[] input2 = { 3, 6, 6.28 * 3, 3.14 * 3 * 3 };
+        double[] input3 = { 4, 8, 6.28 * 4, 3.14 * 4 * 4};
+        return new Object[][] { { 1, 1, input1 }, { 2, 6, input2 }, { 3, 6.28 * 4, input3 } };
     }
 
     @Test(expectedExceptions = AssertionError.class)
@@ -110,29 +86,40 @@ public class TestVariant12 {
 
     ///////////////////////////////////////////////////
 
-    //////////////////////////////////////////
-
     @Test(dataProvider = "whileProvider")
-    public void whileTest(int a, int b, int c) {
-        assertEquals(new Variant12().whileTask(a, b), c);
+    public void whileTest(int n, int[] res) {
+        assertEquals(new Variant12().whileTask(n), res);
     }
 
     @DataProvider
     public Object[][] whileProvider() {
-        return new Object[][] { { 10, 2, 0 }, { 12, 10, 2 }, { 12, 1, 0 }, { 25, 7, 4 } };
+        return new Object[][] { { 5, new int[] {3, 6} }, { 10, new int[] {4, 10} }, { 100, new int[] {14, 105} } };
     }
 
     @Test(expectedExceptions = AssertionError.class, dataProvider = "negativeWhileProvider")
-    public void negativeWhileTest(int a, int b) {
-        new Variant12().whileTask(a, b);
+    public void negativeWhileTest(int n) {
+        new Variant12().whileTask(n);
     }
 
     @DataProvider
     public Object[][] negativeWhileProvider() {
-        return new Object[][] { { 1, 2 }, { -2, 1 }, { 2, -1 } };
+        return new Object[][] { { 0 }, { -20 } };
+    }
+
+    ///////////////////////////////////////////////////
+
+    @Test(dataProvider = "minMaxProvider")
+    public void minMaxTest(int[] arr, int n, int min){
+        assertEquals(new Variant12().minMaxTask(arr, n), min);
+    }
+
+    @DataProvider
+    public Object[][] minMaxProvider(){
+        return new Object[][] { { new int[] {1, 2, 3, 4, 5, 0, 10}, 7, 1}, { new int[] { -1, -2 ,-69 }, 3, 0}, { new int[] { 0 }, 1, 0 } };
     }
 
     //////////////////////////////////////////
+
     @Test(dataProvider = "arrayProvider")
     public void arrayTest(double[] array, double value) {
         assertEquals(new Variant12().arrayTask(array), value);
@@ -171,12 +158,5 @@ public class TestVariant12 {
                 {2, 3, 6, 9, -9}};
 
         return new Object[][] { {input, 2, 3, input23}, { input, 1,4, input14 } };
-
     }
-
-    @Test
-    public void arrayTest2(){
-        assertEquals(new int[]{2, 3}, new int[]{2, 3});
-    }
-
 }
